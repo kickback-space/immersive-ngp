@@ -2,6 +2,13 @@
 
 In this project, we present immersive NGP, the first open-source VR NERF Unity package that brings high resolution, low-latency, 6-DOF NERF rendering to VR. This work is based on Nvidia's ground breaking [instant-ngp](https://github.com/NVlabs/instant-ngp) technique. Current version uses [this commit](https://github.com/NVlabs/instant-ngp/commit/54aba7cfbeaf6a60f29469a9938485bebeba24c3) of instant-ngp.
 
+Pointers to non-VR version: 
+
+The repo runs on top of instant-ngp through a Unity native rendering plugin we developed. This [manuscript](https://www.edit.fis.uni-hamburg.de/ws/files/29623932/2023_IEEEVR_NERF_Unity_Camera_Ready.pdf) documents how Unity native rendering works together with instant-ngp. It is actually quite simple, since instant-ngp uses OpenGL backend, we only need to pass texture handle pointers from Unity to instant-ngp for instant-ngp to render images to these Unity textures directly.
+
+Q: "Could you give us some pointers on what would have to change to make this repo work in non-VR settings? "
+A: To develop for non-VR settings, feel free to refer to the [StereoNerfRenderer.cpp](https://github.com/uhhhci/immersive-ngp/blob/main/stereo-nerf-unity/Assets/NERF_NativeRendering/Scripts/StereoNerfRenderer.cs) and the [unity.cu](https://github.com/uhhhci/immersive-ngp/blob/main/instant-ngp/src/unity.cu) scripts. For VR application, the renderer has two render buffers to create stereoscopic images. I think for desktop applications, you could remove one render buffer, and convert the camera transform in Unity to a camera view matrix like in the StereoNerfRenderer.cpp.
+
 ## Features
 
 * Stereoscopic, 6-DOF, real-time, low-latency NERF VR rendering in Unity. 
